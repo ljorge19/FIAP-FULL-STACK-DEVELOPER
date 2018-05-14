@@ -2,7 +2,9 @@ package ex4;
 
 public enum ClassificacaoClientes {
 	
-	POTENCIAL(400000,500000), MEDIO(200000,400000), BAIXO(0,200000);
+	POTENCIAL(400_000,500_000), 
+	MEDIO(200_000,400_000), 
+	BAIXO(0,200_000);
 	
 	private double faixaInicial;
 	private double faixaFinal;
@@ -12,14 +14,14 @@ public enum ClassificacaoClientes {
 		this.faixaFinal=faixaFinal;
 	}
 	
-	public boolean isCompatible(ContaBancaria conta){
+	  public boolean isCompatible(ContaBancaria conta){
     	if (conta.getSaldo()>=faixaInicial && conta.getSaldo()<=faixaFinal){
-    		System.out.println(this.name()+" Renda compatível.");
+    		System.out.println(this.name()+" Renda compativel.");
     		return true;
     	}
     	else
     	{
-    		System.out.println(this.name()+" Renda não compatível.");
+    		System.out.println(this.name()+" Renda n�o compativel.");
     		return false;
     	}
     }
