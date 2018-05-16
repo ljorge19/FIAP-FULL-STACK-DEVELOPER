@@ -9,10 +9,10 @@ public class ContaPoupanca extends ContaBancaria {
 
 	public void saque(double valor) throws SaldoInsuficiente{
 		
-		if (saldo-(valor-0.10)<0){
+		if ((saldo-(valor*0.10))  <0){
 			throw new SaldoInsuficiente("Saldo Insuficiente para o Saque.");
 		}
-		saldo-=valor-0.10;
+		saldo-=valor*0.10;
 	}
 	
 

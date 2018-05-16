@@ -6,13 +6,17 @@ public class TesteSaldoInsuficiente {
 
 	public static void main(String[] args) {
 		
-		ContaPoupanca conta1 = new ContaPoupanca("José da Silva", "Rua A, 123", "1234567");
+		ContaPoupanca conta1 = new ContaPoupanca("joao da Silva", "Rua A, 123", "1234567");
 		conta1.deposita(100);
+		
+		
 		try {
-			conta1.saque(120);
+			conta1.saque(101);
 		} catch (SaldoInsuficiente e) {
 			System.out.println(e.getMessage());
 		}
+		
+		System.out.println("Saldo = " + (conta1.saldo));
 
 	}
 
