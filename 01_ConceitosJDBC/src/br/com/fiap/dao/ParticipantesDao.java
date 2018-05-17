@@ -13,7 +13,7 @@ import br.com.fiap.entity.Participantes;
 		}
 
 		@Override
-		public Participantes buscarr(int id) throws Exception {
+		public Participantes buscar(int id) throws Exception {
 			// TODO Auto-generated method stub
 			return null;
 		}

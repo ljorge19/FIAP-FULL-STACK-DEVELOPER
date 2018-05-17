@@ -1,28 +1,85 @@
 package br.com.fiap.dao;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import br.com.fiap.entity.Evento;
 
 public class EventosDao extends Dao<Evento> {
-	
-	
 
 	@Override
 	public void incluir(Evento elemento) throws Exception {
-		// TODO Auto-generated method stub
+		try {
+			abrirConexao();
+			String sql = ("INSERT INTO EVENTOS (DESCRICAO, DATA, RESPONSAVEL) values (?,?,?)");
+			stmt = cn.prepareStatement(sql);
+			stmt.setString(1, elemento.getDescricao());
+			stmt.setDate(2, new java.sql.Date(elemento.getData().getTime()));
+			stmt.setString(3, elemento.getResponsavel());
+			stmt.executeUpdate();
+
+		} catch (Exception e) {
+			throw e;
+		} finally {
+			fecharConexao();
+		}
+
+	}
+
+	@Override
+	public Evento buscar(int id) throws Exception {
+		Evento evento = null;
+
+		try {
+			abrirConexao();
+			String sql = ("SELECT * FROM EVENTOS WHERE ID=?");
+			stmt = cn.prepareStatement(sql);
+			stmt.setInt(1, id);
+			
+			if(rs.next()) {
+				evento = new Evento();
+				evento.setId(id);
+				evento.setDescricao(rs.getString("DESCRICAO"));
+				evento.setData(rs.getDate("DATA"));
+				evento.setResponsavel(rs.getString("RESPONSAVEL"));
+			}
+
+		} catch (Exception e) {
+			throw e;
+		} finally {
+			fecharConexao();
+		}
+			return evento;
 		
 	}
 
 	@Override
-	public Evento buscarr(int id) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
 	public Set<Evento> listar(int... param) throws Exception {
-		// TODO Auto-generated method stub
+		Set<Evento> lista = new  HashSet<>(); 
+				
+		try {
+			if(param.length > 0) {
+				throw new Exception("Não é permitido parametro para esse metodo");
+			}
+			abrirConexao();
+			String sql = ("SELECT * FROM EVENTOS");
+			stmt = cn.prepareStatement(sql);
+			
+			
+			while(rs.next()) {
+				Evento evento = new Evento();
+				evento.setId(rs.getInt("ID"));
+				evento.setDescricao(rs.getString("DESCRICAO"));
+				evento.setData(rs.getDate("DATA"));
+				evento.setResponsavel(rs.getString("RESPONSAVEL"));
+				lista.add(evento);
+			}
+
+		} catch (Exception e) {
+			throw e;
+		} finally {
+			fecharConexao();
+		}
 		return null;
 	}
 

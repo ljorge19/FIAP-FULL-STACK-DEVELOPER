@@ -33,7 +33,7 @@ public abstract class Dao<T> {
 	
 	
 	public abstract void incluir(T elemento)throws Exception;
-	public abstract T buscarr(int id)throws Exception; 
+	public abstract T buscar(int id)throws Exception; 
 	public abstract Set<T> listar(int... param)throws Exception; 
 	
 	/*
