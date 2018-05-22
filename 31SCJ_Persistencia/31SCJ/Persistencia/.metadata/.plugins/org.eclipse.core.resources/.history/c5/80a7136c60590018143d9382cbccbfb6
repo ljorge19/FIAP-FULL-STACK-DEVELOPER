@@ -1,0 +1,15 @@
+package br.com.fiap.dao;
+
+public abstract class Dao<T> {
+	
+	public void abrirConexao() {
+		
+	}
+	
+	public void fecharConexao() {
+		
+	}
+	
+	public abstract void incluir(T elemento);
+
+}

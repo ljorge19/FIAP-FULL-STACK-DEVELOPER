@@ -1,0 +1,13 @@
+package br.com.fiap.dao;
+
+public class Dao {
+	
+	public void abrirConexao() {
+		
+	}
+	
+	public void fecharConexao() {
+		
+	}
+
+}

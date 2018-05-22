@@ -1,0 +1,14 @@
+package br.com.fiap.aplicacao;
+
+import javax.swing.JOptionPane;
+
+public class CadastroEventos {
+	public static void main(String[] args) {
+		try {
+			
+			
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(null, "ERRO: " + e.getMessage());
+		}
+	}
+}

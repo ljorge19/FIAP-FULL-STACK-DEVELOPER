@@ -1,0 +1,42 @@
+package br.com.fiap.aplicacao;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+import javax.swing.JOptionPane;
+
+public class CadastroEventos {
+	public static void main(String[] args) {
+		try {
+			while(true) {
+				int opcao = JOptionPane.showConfirmDialog(
+						null, 
+						"Deseja incluir um evento?", 
+						"Confirmação", 
+						JOptionPane.YES_NO_OPTION);
+				
+				if(opcao == JOptionPane.NO_OPTION) {
+					break;
+				}
+				
+				String descricao = JOptionPane
+						.showInputDialog("Descrição do evento:");
+				
+				String data = JOptionPane
+						.showInputDialog("Data do evento (dd/MM/aaaa):");
+				
+				Date dataEvento = new 
+						SimpleDateFormat("dd/MM/yyyy").parse(data);
+				
+				String responsavel = JOptionPane
+						.showInputDialog("Responsavel do evento:");
+				
+				
+				
+			}
+			
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(null, "ERRO: " + e.getMessage());
+		}
+	}
+}
