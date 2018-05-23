@@ -3,15 +3,15 @@ package br.com.fiap.entity;
 import java.util.Date;
 
 public class Evento {
+
+	private int id;
+	private String descricao;
+	private Date data;
+	private String responsavel;
 	
-	int id;
-	String descricao;
-    Date data;
-    String responsavel;
 	public int getId() {
 		return id;
 	}
-	
 	public void setId(int id) {
 		this.id = id;
 	}
@@ -33,5 +33,10 @@ public class Evento {
 	public void setResponsavel(String responsavel) {
 		this.responsavel = responsavel;
 	}
-
+	
+	@Override
+	public String toString() {
+		return this.getDescricao();
+	}
+	
 }

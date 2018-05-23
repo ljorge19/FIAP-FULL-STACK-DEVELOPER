@@ -1,11 +1,11 @@
 package br.com.fiap.entity;
 
-public class Participantes {
+public class Participante {
 	
-	int id;
-	int idevento;
-	String nome;
-	String email;
+	private int id;
+	private Evento evento;
+	private String nome;
+	private String email;
 	
 	public int getId() {
 		return id;
@@ -13,11 +13,11 @@ public class Participantes {
 	public void setId(int id) {
 		this.id = id;
 	}
-	public int getIdevento() {
-		return idevento;
+	public Evento getEvento() {
+		return evento;
 	}
-	public void setIdevento(int idevento) {
-		this.idevento = idevento;
+	public void setEvento(Evento evento) {
+		this.evento = evento;
 	}
 	public String getNome() {
 		return nome;
@@ -31,5 +31,4 @@ public class Participantes {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-
 }
