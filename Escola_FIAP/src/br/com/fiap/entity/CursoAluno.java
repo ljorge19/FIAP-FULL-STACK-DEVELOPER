@@ -20,22 +20,29 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 @Entity
-@Table(name = "disciplina")
-public class Disciplina {
+@Table(name = "CURSO_ALUNO")
+public class CursoAluno {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "ID")
 	private Long id;
 
-	@Column(name = "NOME", length = 45)
-	private String nome;
+	@Column(name = "NOME_CURSO", length = 45)
+	private String nomeCurso;
 
+	@Column(name = "NOME_ALUNO", length = 45)
+	private String nomeAluno;
+	
 	@Column(name = "NOTA")
 	private int nota;
 
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "IDCURSO")
 	private Curso curso;
+
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "IDALUNO")
+	private Aluno aluno;
 
 	public Long getId() {
 		return id;
@@ -45,12 +52,20 @@ public class Disciplina {
 		this.id = id;
 	}
 
-	public String getNome() {
-		return nome;
+	public String getNomeCurso() {
+		return nomeCurso;
 	}
 
-	public void setNome(String nome) {
-		this.nome = nome;
+	public void setNomeCurso(String nomeCurso) {
+		this.nomeCurso = nomeCurso;
+	}
+
+	public String getNomeAluno() {
+		return nomeAluno;
+	}
+
+	public void setNomeAluno(String nomeAluno) {
+		this.nomeAluno = nomeAluno;
 	}
 
 	public int getNota() {
@@ -67,5 +82,13 @@ public class Disciplina {
 
 	public void setCurso(Curso curso) {
 		this.curso = curso;
+	}
+
+	public Aluno getAluno() {
+		return aluno;
+	}
+
+	public void setAluno(Aluno aluno) {
+		this.aluno = aluno;
 	}
 }

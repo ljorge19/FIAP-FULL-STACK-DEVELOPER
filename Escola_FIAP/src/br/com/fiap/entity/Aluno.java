@@ -30,12 +30,12 @@ public class Aluno {
 	@Column(name = "NOME", length = 45)
 	private String nome;
 
+	@Column(name = "CPF")
+	private Long cpf;
+
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "IDESCOLA")
 	private Escola escola;
-	
-	@ManyToMany
-	private Set<Curso> disciplinas = new HashSet<>();
 
 	public Long getId() {
 		return id;
@@ -53,19 +53,19 @@ public class Aluno {
 		this.nome = nome;
 	}
 
+	public Long getCpf() {
+		return cpf;
+	}
+
+	public void setCpf(Long cpf) {
+		this.cpf = cpf;
+	}
+
 	public Escola getEscola() {
 		return escola;
 	}
 
 	public void setEscola(Escola escola) {
 		this.escola = escola;
-	}
-
-	public Set<Curso> getDisciplinas() {
-		return disciplinas;
-	}
-
-	public void setDisciplinas(Set<Curso> disciplinas) {
-		this.disciplinas = disciplinas;
 	}
 }

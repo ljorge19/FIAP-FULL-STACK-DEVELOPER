@@ -8,6 +8,7 @@ import javax.persistence.TypedQuery;
 import br.com.fiap.entity.Escola;
 
 
+
 public class EscolaDao {
 	private EntityManager em;
 
@@ -57,7 +58,7 @@ public class EscolaDao {
 	   * @param id
 	   * @return o objeto Pessoa.
 	   */
-	  public Escola consultarEscola(Long id) {
+	  public Escola consultarEscolaPorId(Long id) {
 	    Escola escola = null;
 	    try {
 	      //Consulta uma pessoa pelo seu ID.
@@ -67,4 +68,10 @@ public class EscolaDao {
 	    }
 	    return escola;
 	  }
+	  
+	  public List<Escola> listarEscolas() {
+			TypedQuery<Escola> query = em.createQuery("Select e from Escola e", Escola.class);
+			return query.getResultList();
+		}
+
 	}

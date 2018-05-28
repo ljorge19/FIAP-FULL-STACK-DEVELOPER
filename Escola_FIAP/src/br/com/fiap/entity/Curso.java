@@ -34,11 +34,11 @@ public class Curso {
 	@JoinColumn(name = "IDESCOLA")
 	private Escola escola;
 	
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "curso")
-	private Set<Disciplina> disciplinas = new HashSet<>();
+	/*@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "curso")
+	private Set<Notas> notas = new HashSet<>();
 	
 	@ManyToMany
-	private Set<Aluno> alunos = new HashSet<>();
+	private Set<Aluno> alunos = new HashSet<>();*/
 
 	public Long getId() {
 		return id;
@@ -64,12 +64,12 @@ public class Curso {
 		this.escola = escola;
 	}
 
-	public Set<Disciplina> getDisciplinas() {
-		return disciplinas;
+	/*public Set<Notas> getNotas() {
+		return notas;
 	}
 
-	public void setDisciplinas(Set<Disciplina> disciplinas) {
-		this.disciplinas = disciplinas;
+	public void setNotas(Set<Notas> notas) {
+		this.notas = notas;
 	}
 
 	public Set<Aluno> getAlunos() {
@@ -78,5 +78,5 @@ public class Curso {
 
 	public void setAlunos(Set<Aluno> alunos) {
 		this.alunos = alunos;
-	}
+	}*/
 }
