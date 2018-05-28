@@ -58,16 +58,32 @@ public class CursoAlunoDao {
 	   * @param id
 	   * @return o objeto Pessoa.
 	   */
-	  public CursoAluno consultarCursoAlunoPorId(Long aluno) {
-	    CursoAluno notas = null;
+	  public CursoAluno consultarCursoAlunoPorId(Long aluno, Long curso) {
+	    CursoAluno cursoAlunoRetorno = null;
 	    try {
 	      //Consulta uma pessoa pelo seu ID.
-	    	TypedQuery<CursoAluno> query = em.createQuery("Select e from CursoAluno e where e.aluno = :aluno", CursoAluno.class);
+	    	TypedQuery<CursoAluno> query = em.createQuery("Select e from CursoAluno e where e.aluno = :aluno and e.curso = :curso ", CursoAluno.class);
 	    } finally {
 	      em.close();
 	    }
-	    return notas;
+	    return cursoAlunoRetorno;
 	  }
+	  
+	 /* public CursoAluno consultarAlunoPorId(Long aluno) {
+		    CursoAluno alunoRetorno = null;
+		    try {
+		      //Consulta uma pessoa pelo seu ID.
+		    	TypedQuery<CursoAluno> query = em.createQuery("Select e from CursoAluno e where e.aluno = :aluno ", CursoAluno.class);
+		    } finally {
+		      em.close();
+		    }
+		    return alunoRetorno;
+		  }*/
+	  
+	  public List<CursoAluno> consultarSituacaoAluno(Long aluno) {
+			TypedQuery<CursoAluno> query = em.createQuery("Select e from CursoAluno e where e.aluno = :aluno ", CursoAluno.class);
+			return query.getResultList();
+		}
 	  
 	  public List<CursoAluno> listarCursoAluno() {
 			TypedQuery<CursoAluno> query = em.createQuery("Select e from CursoAluno e", CursoAluno.class);

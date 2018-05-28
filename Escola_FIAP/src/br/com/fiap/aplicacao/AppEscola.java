@@ -18,17 +18,20 @@ public class AppEscola {
 
 	public static void main(String[] args) {
 
-		incluirEscola();
-		incluirAluno();
-		incluirCurso();
-		/*
-		 * vincularAlunoCurso(); notasDosAlunosPorCurso();
-		 */
-		// listarEscolas();
+		//incluirEscola();
+		//incluirAluno();
+		//incluirCurso();
+		//vincularAlunoCurso();
+		incluirNotasDosAlunosPorCurso();
+		//listarEscolas();
+		//listarAlunos(); 
+		//listarCursos(); 
+		//listarSituacaoDoAluno();
+		 
 	}
 
 	/**
-	 * Metodo para incluir uá escola
+	 * Metodo para incluir á escola
 	 * 
 	 * 
 	 * 
@@ -69,6 +72,7 @@ public class AppEscola {
 		Aluno aluno = new Aluno();
 		aluno.setNome("Leandro Jorge");
 		aluno.setCpf(36272435878L);
+		aluno.setEscola(escola);
 
 		try {
 			alunoDao.salvar(aluno);
@@ -115,14 +119,80 @@ public class AppEscola {
 	private static void vincularAlunoCurso() {
 		boolean alunoExistente = true;
 		boolean cursoExistente = true;
-		EntityManagerFactory emf1 = Persistence.createEntityManagerFactory("jpaPU");
-		EntityManager em1 = emf1.createEntityManager();
+		EntityManagerFactory emf = Persistence.createEntityManagerFactory("jpaPU");
+		
+		//
+		// verificar se o curso existe
+		//
+		EntityManager em1 = emf.createEntityManager();
+		CursoDao cursoDao = new CursoDao(em1);
+		Curso curso = null;
+		try {
+			curso = cursoDao.consultarCursoPorId(1L);
+			if (curso == null) {
+				alunoExistente = false;
+			}
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(null, "ERRO: " + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+			e.printStackTrace();
+		}
 
-		EntityManagerFactory emf2 = Persistence.createEntityManagerFactory("jpaPU");
-		EntityManager em2 = emf2.createEntityManager();
+		//
+		// verificar se o aluno existe
+		//
+		EntityManager em2 = emf.createEntityManager();
+		AlunoDao alunoDao = new AlunoDao(em2);
+		Aluno aluno = null;
+		try {
+			aluno = alunoDao.consultarAlunoPorId(2L);
+			if (aluno == null) {
+				alunoExistente = false;
+			}
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(null, "ERRO: " + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+			e.printStackTrace();
+		}
 
-		EntityManagerFactory emf3 = Persistence.createEntityManagerFactory("jpaPU");
-		EntityManager em3 = emf3.createEntityManager();
+		//
+		// instanciando o CursoAluno que será inserido
+		//
+		EntityManager em3 = emf.createEntityManager();
+		CursoAluno cursoAluno = new CursoAluno();
+		cursoAluno.setNomeAluno(aluno.getNome());
+		cursoAluno.setAluno(aluno);
+		cursoAluno.setNomeCurso(curso.getNome());
+		cursoAluno.setCurso(curso);
+
+		if (alunoExistente == true && cursoExistente == true) {
+
+			CursoAlunoDao cursoAlunoDao = new CursoAlunoDao(em3);
+			try {
+				cursoAlunoDao.salvar(cursoAluno);
+			} catch (Exception e) {
+				JOptionPane.showMessageDialog(null, "ERRO: " + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+				e.printStackTrace();
+			}
+		}
+	}
+
+	/**
+	 * Vincular nota do aluno ao curso
+	 * 
+	 * 
+	 * 
+	 * @noReturn
+	 */
+
+	private static void incluirNotasDosAlunosPorCurso() {
+		boolean alunoExistente = true;
+		boolean cursoExistente = true;
+
+		EntityManagerFactory emf = Persistence.createEntityManagerFactory("jpaPU");
+		EntityManager em1 = emf.createEntityManager();
+
+		EntityManager em2 = emf.createEntityManager();
+
+		EntityManager em3 = emf.createEntityManager();
 
 		//
 		// verificar se o curso existe
@@ -145,7 +215,7 @@ public class AppEscola {
 		AlunoDao alunoDao = new AlunoDao(em2);
 		Aluno aluno = null;
 		try {
-			aluno = alunoDao.consultarAlunoPorId(1L);
+			aluno = alunoDao.consultarAlunoPorId(2L);
 			if (aluno == null) {
 				alunoExistente = false;
 			}
@@ -154,44 +224,34 @@ public class AppEscola {
 			e.printStackTrace();
 		}
 
-		//
-		// instanciando o CursoAluno que será inserido
-		//
-		CursoAluno cursoAluno = new CursoAluno();
-		cursoAluno.setNomeAluno(aluno.getNome());
-		cursoAluno.setAluno(aluno);
-		cursoAluno.setNomeCurso(curso.getNome());
-		cursoAluno.setCurso(curso);
+		// chamar o campo para inserir a nota do aluno
 
-		CursoAlunoDao cursoAlunoDao = new CursoAlunoDao(em3);
-		try {
-			cursoAlunoDao.salvar(cursoAluno);
-		} catch (Exception e) {
-			JOptionPane.showMessageDialog(null, "ERRO: " + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
-			e.printStackTrace();
+		//
+		// inserindo a nota do aluno
+		//
+		CursoAluno cursoAluno = null;
+		if (alunoExistente == true && cursoExistente == true) {
+
+			CursoAlunoDao cursoAlunoDao = new CursoAlunoDao(em3);
+
+			try {
+				cursoAluno = cursoAlunoDao.consultarCursoAlunoPorId(1L, 1L);
+			} catch (Exception e) {
+				JOptionPane.showMessageDialog(null, "ERRO: " + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+				e.printStackTrace();
+			}
+
+			// colocar a nota vinda pelo joptionpane
+			cursoAluno.setNota(10);
+			try {
+				cursoAlunoDao.salvar(cursoAluno);
+			} catch (Exception e) {
+				JOptionPane.showMessageDialog(null, "ERRO: " + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+				e.printStackTrace();
+			}
+
 		}
 	}
-
-	/**
-	 * Vincular nota do aluno ao curso
-	 * 
-	 * 
-	 * 
-	 * @noReturn
-	 */
-	/*
-	 * private static void notasDosAlunosPorCurso() { EntityManagerFactory emf =
-	 * Persistence.createEntityManagerFactory("jpaPU"); EntityManager em =
-	 * emf.createEntityManager(); AlunoDao alunoDao = new AlunoDao(em);
-	 * CursoAlunoDao cursoAlunoDao = new CursoAlunoDao(em);
-	 * 
-	 * try {
-	 * 
-	 * cursoAlunoDao.salvar(disciplina);
-	 * 
-	 * } } catch (Exception e) { JOptionPane.showMessageDialog(null, "ERRO: " +
-	 * e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE); e.printStackTrace(); } }
-	 */
 
 	/**
 	 * Listar escolas
@@ -218,20 +278,85 @@ public class AppEscola {
 		}
 	}
 
-	/*
-	 * private static void listaNotasDosAlunosPorCurso() { EntityManagerFactory emf
-	 * = Persistence.createEntityManagerFactory("jpaPU"); EntityManager em =
-	 * emf.createEntityManager(); AlunoDao alunoDao = new AlunoDao(em);
-	 * CursoAlunoDao cursoAlunoDao = new CursoAlunoDao(em);
+	/**
+	 * Listar alunos
 	 * 
-	 * try { for (Aluno alunos : alunoDao.listarAlunos()) { Notas notas =
-	 * notasDao.consultarNotasPorId(alunos.getId());
-	 * System.out.println("-------------------------------------");
-	 * System.out.println("NOME ALUNO: " + alunos.getNome());
-	 * System.out.println("CPF: " + alunos.getCpf()); System.out.println("CURSO: " +
-	 * notas.getNome()); System.out.println("NOTA: " + notas.getNota());
-	 * System.out.println("-------------------------------------"); } } catch
-	 * (Exception e) { JOptionPane.showMessageDialog(null, "ERRO: " +
-	 * e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE); e.printStackTrace(); }
+	 * 
+	 * 
+	 * @noReturn
 	 */
+	private static void listarAlunos() {
+		EntityManagerFactory emf = Persistence.createEntityManagerFactory("jpaPU");
+		EntityManager em = emf.createEntityManager();
+		AlunoDao alunoDao = new AlunoDao(em);
+
+		try {
+			for (Aluno aluno : alunoDao.listarAlunos()) {
+				System.out.println("-------------------------------------");
+				System.out.println("Código do aluno: " + aluno.getId() + "Nome do aluno: " + aluno.getNome());
+				System.out.println("-------------------------------------");
+			}
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(null, "ERRO: " + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+			e.printStackTrace();
+		}
+	}
+
+	/**
+	 * Listar cursos
+	 * 
+	 * 
+	 * 
+	 * @noReturn
+	 */
+	private static void listarCursos() {
+		EntityManagerFactory emf = Persistence.createEntityManagerFactory("jpaPU");
+		EntityManager em = emf.createEntityManager();
+		CursoDao cursoDao = new CursoDao(em);
+
+		try {
+			for (Curso curso : cursoDao.listarCursos()) {
+				System.out.println("-------------------------------------");
+				System.out.println("Código do curso: " + curso.getId() + "Nome do curso: " + curso.getNome());
+				System.out.println("-------------------------------------");
+			}
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(null, "ERRO: " + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+			e.printStackTrace();
+		}
+	}
+
+	/**
+	 * Listar situação do aluno
+	 * 
+	 * 
+	 * 
+	 * @noReturn
+	 */
+	private static void listarSituacaoDoAluno() {
+		boolean alunoExistente = true;
+		EntityManagerFactory emf1 = Persistence.createEntityManagerFactory("jpaPU");
+		EntityManager em1 = emf1.createEntityManager();
+
+		CursoAlunoDao cursoAlunoDao = new CursoAlunoDao(em1);
+
+		try {
+			for (CursoAluno cursoAlunos : cursoAlunoDao.consultarSituacaoAluno(1L)) {
+				if (cursoAlunos == null) {
+					alunoExistente = false;
+					System.out.println("-------------------------------------");
+					System.out.println("Aluno não existente, código incorreto ! ");
+					System.out.println("-------------------------------------");
+				}
+				System.out.println("-------------------------------------");
+				System.out.println("Nome do curso: " + cursoAlunos.getNomeCurso());
+				System.out.println("Nome do aluno: " + cursoAlunos.getNomeAluno());
+				System.out.println("Nota do aluno: " + cursoAlunos.getNota());
+				System.out.println("-------------------------------------");
+			}
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(null, "ERRO: " + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+			e.printStackTrace();
+		}
+	}
 }

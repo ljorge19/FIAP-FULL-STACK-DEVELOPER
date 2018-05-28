@@ -70,7 +70,7 @@ public class AlunoDao {
 	  }
 	  
 	  public List<Aluno> listarAlunos() {
-			TypedQuery<Aluno> query = em.createQuery("Select a from Aluno e", Aluno.class);
+			TypedQuery<Aluno> query = em.createQuery("Select a from Aluno a", Aluno.class);
 			return query.getResultList();
 		}
 	}
