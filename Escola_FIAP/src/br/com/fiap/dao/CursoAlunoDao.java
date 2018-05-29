@@ -5,6 +5,8 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 
+import br.com.fiap.entity.Aluno;
+import br.com.fiap.entity.Curso;
 import br.com.fiap.entity.CursoAluno;
 
 
@@ -16,25 +18,25 @@ public class CursoAlunoDao {
 		this.em = em;
 	}
 
-	public CursoAluno salvar(CursoAluno disciplina) throws Exception {
+	public CursoAluno salvar(CursoAluno cursoAluno) throws Exception {
 	    try {
 	      // Inicia uma transação com o banco de dados.
 	      em.getTransaction().begin();
 	      System.out.println("Salvando a pessoa.");
 	      // Verifica se a pessoa ainda não está salva no banco de dados.
-	      if(disciplina.getId() == null) {
+	      if(cursoAluno.getId() == null) {
 	        //Salva os dados da pessoa.
-	        em.persist(disciplina);
+	        em.persist(cursoAluno);
 	      } else {
 	        //Atualiza os dados da pessoa.
-	        disciplina = em.merge(disciplina);
+	    	  cursoAluno = em.merge(cursoAluno);
 	      }
 	      // Finaliza a transação.
 	      em.getTransaction().commit();
 	    } finally {
 	      em.close();
 	    }
-	    return disciplina;
+	    return cursoAluno;
 	  }
 	
 	public void excluir(Long id) {
@@ -58,16 +60,16 @@ public class CursoAlunoDao {
 	   * @param id
 	   * @return o objeto Pessoa.
 	   */
-	  public CursoAluno consultarCursoAlunoPorId(Long aluno, Long curso) {
+	 /* public CursoAluno consultarCursoAlunoPorId(Long aluno, Long curso) {
 	    CursoAluno cursoAlunoRetorno = null;
 	    try {
 	      //Consulta uma pessoa pelo seu ID.
-	    	TypedQuery<CursoAluno> query = em.createQuery("Select e from CursoAluno e where e.aluno = :aluno and e.curso = :curso ", CursoAluno.class);
+	    	TypedQuery<CursoAluno> query = em.createQuery("Select ca from CursoAluno ca where ca.aluno = :aluno and ca.curso = :curso ", CursoAluno.class);
 	    } finally {
 	      em.close();
 	    }
 	    return cursoAlunoRetorno;
-	  }
+	  }*/
 	  
 	 /* public CursoAluno consultarAlunoPorId(Long aluno) {
 		    CursoAluno alunoRetorno = null;
@@ -79,9 +81,15 @@ public class CursoAlunoDao {
 		    }
 		    return alunoRetorno;
 		  }*/
+	
+	public List<CursoAluno> consultarCursoAlunoPorId(Aluno aluno, Curso curso) {
+		TypedQuery<CursoAluno> query = em.createQuery("Select e from CursoAluno e where e.aluno = :aluno and e.curso = :curso", CursoAluno.class);
+		return query.getResultList();
+	}
 	  
-	  public List<CursoAluno> consultarSituacaoAluno(Long aluno) {
-			TypedQuery<CursoAluno> query = em.createQuery("Select e from CursoAluno e where e.aluno = :aluno ", CursoAluno.class);
+	  public List<CursoAluno> consultarSituacaoAluno(Aluno aluno) {
+			TypedQuery<CursoAluno> query = em.createQuery("Select e from CursoAluno e where e.aluno = :aluno", CursoAluno.class);
+			query.setParameter("aluno", aluno);
 			return query.getResultList();
 		}
 	  

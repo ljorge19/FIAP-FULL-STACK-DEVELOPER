@@ -22,11 +22,11 @@ public class AppEscola {
 		//incluirAluno();
 		//incluirCurso();
 		//vincularAlunoCurso();
-		incluirNotasDosAlunosPorCurso();
+		//incluirNotasDosAlunosPorCurso();
 		//listarEscolas();
 		//listarAlunos(); 
 		//listarCursos(); 
-		//listarSituacaoDoAluno();
+		listarSituacaoDoAluno();
 		 
 	}
 
@@ -234,13 +234,29 @@ public class AppEscola {
 
 			CursoAlunoDao cursoAlunoDao = new CursoAlunoDao(em3);
 
+			/*try {
+				cursoAluno = cursoAlunoDao.consultarCursoAlunoPorId(2L, 1L);
+			} catch (Exception e) {
+				JOptionPane.showMessageDialog(null, "ERRO: " + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+				e.printStackTrace();
+			}*/
+            
 			try {
-				cursoAluno = cursoAlunoDao.consultarCursoAlunoPorId(1L, 1L);
+				for (CursoAluno cursoAlunos : cursoAlunoDao.consultarCursoAlunoPorId(aluno, curso)) {
+					cursoAluno = new CursoAluno();
+					cursoAluno.setId(cursoAlunos.getId());
+					cursoAluno.setAluno(aluno);
+					cursoAluno.setCurso(curso);
+					cursoAluno.setNomeAluno(aluno.getNome());
+					cursoAluno.setNomeCurso(curso.getNome());	
+				}
 			} catch (Exception e) {
 				JOptionPane.showMessageDialog(null, "ERRO: " + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
 				e.printStackTrace();
 			}
-
+			
+			
+			
 			// colocar a nota vinda pelo joptionpane
 			cursoAluno.setNota(10);
 			try {
@@ -317,7 +333,8 @@ public class AppEscola {
 		try {
 			for (Curso curso : cursoDao.listarCursos()) {
 				System.out.println("-------------------------------------");
-				System.out.println("Código do curso: " + curso.getId() + "Nome do curso: " + curso.getNome());
+				System.out.println("Código do curso: " + curso.getId()); 
+				System.out.println("Nome do curso: " + curso.getNome());
 				System.out.println("-------------------------------------");
 			}
 		} catch (Exception e) {
@@ -338,10 +355,30 @@ public class AppEscola {
 		EntityManagerFactory emf1 = Persistence.createEntityManagerFactory("jpaPU");
 		EntityManager em1 = emf1.createEntityManager();
 
+		
+		
+		EntityManager em2 = emf1.createEntityManager();
+		//
+		// verificar se o aluno existe
+		//
+		AlunoDao alunoDao = new AlunoDao(em2);
+		Aluno aluno = null;
+		try {
+			aluno = alunoDao.consultarAlunoPorId(2L);
+			if (aluno == null) {
+				alunoExistente = false;
+			}
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(null, "ERRO: " + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+			e.printStackTrace();
+		}
+		
+		
+		
 		CursoAlunoDao cursoAlunoDao = new CursoAlunoDao(em1);
 
 		try {
-			for (CursoAluno cursoAlunos : cursoAlunoDao.consultarSituacaoAluno(1L)) {
+			for (CursoAluno cursoAlunos : cursoAlunoDao.listarCursoAluno()) {
 				if (cursoAlunos == null) {
 					alunoExistente = false;
 					System.out.println("-------------------------------------");
