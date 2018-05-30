@@ -15,21 +15,93 @@ import br.com.fiap.entity.CursoAluno;
 import br.com.fiap.entity.Escola;
 
 public class AppEscola {
+	
+	
 
 	public static void main(String[] args) {
-
-		//incluirEscola();
-		//incluirAluno();
-		//incluirCurso();
-		//vincularAlunoCurso();
-		//incluirNotasDosAlunosPorCurso();
-		//listarEscolas();
-		//listarAlunos(); 
-		//listarCursos(); 
-		listarSituacaoDoAluno();
-		 
+		menu();
+		//1-incluirEscola();
+		//2-incluirAluno();
+		//3-incluirCurso();
+		//4-vincularAlunoCurso();
+		//5-incluirNotasDosAlunosPorCurso();
+		//6-listarEscolas();
+		//7-listarAlunos(); 
+		//8-listarCursos(); 
+		//9-listarSituacaoDoAluno();
 	}
 
+	private static void menu() { // menu principal
+		String opcaoViaTeclado =null;
+		int opcao = 0;
+		do {
+			System.out
+					.println("\n\n### SISCOM - Sistema Comercial de Controle de Compras e Vendas ###");
+			System.out.println("\n                ====================================");
+			System.out.println("                  |     1 - Incluir Escola           |");
+			System.out.println("                  |     2 - Incluir Aluno            |");
+			System.out.println("                  |     3 - Incluir Curso            |");
+			System.out.println("                  |     4 - vincular Aluno Curso     |");
+			System.out.println("                  |     5 - incluir Notas Dos Alunos |");
+			System.out.println("                  |     6 - listarEscolas            |");
+			System.out.println("                  |     7 - listarAlunos             |");
+			System.out.println("                  |     8 - listar Cursos            |");
+			System.out.println("                  |     9 - listarS ituacao Do Aluno |");
+			System.out.println("                  |     0 - Sair                     |");
+			System.out.println("                  ==================================\n");
+			opcaoViaTeclado = JOptionPane.showInputDialog("OpÁ„o -> ");
+			System.out.print("\n");
+			
+			/* if (opcaoViaTeclado.matches("^[a-zA-Z¡¬√¿«… Õ”‘’⁄‹·‚„‡ÁÈÍÌÛÙı˙¸]*$")) {
+		         System.out.println("SÛ tem letras.");
+		         opcaoViaTeclado = "10";
+			 }else if (opcaoViaTeclado.matches("^[0-9]*$")) {
+		         System.out.println("SÛ tem dÌgitos.");
+			 }*/
+			 
+			if (!opcaoViaTeclado.matches("^[0-9]*$"))
+			     opcaoViaTeclado = "100";
+			
+			if (opcaoViaTeclado.equals(""))
+				 opcaoViaTeclado = "100";
+			
+			
+			opcao = Integer.valueOf(opcaoViaTeclado);
+			switch (opcao) {
+			case 1:
+				incluirEscola();
+				break;
+			case 2:
+				incluirAluno();
+				break;
+			case 3:
+				incluirCurso();
+				break;
+			case 4:
+				vincularAlunoCurso();
+				break;
+			case 5:
+				incluirNotasDosAlunosPorCurso();
+			case 6:
+				listarEscolas();
+			case 7:
+				listarAlunos();
+			case 8:
+				listarCursos();
+			case 9:
+				listarSituacaoDoAluno();
+				break;
+			case 0:
+			     System.out.println("Programa encerrado.");
+			     JOptionPane.showMessageDialog(null, "Programa encerrado.");
+			     break;
+			default:
+				System.out.println("OpÁ„o Inv·lida!");
+				JOptionPane.showMessageDialog(null, "OpÁ„o Inv·lida!");
+				break;
+			}
+		} while (opcao != 0);
+	}
 	/**
 	 * Metodo para incluir · escola
 	 * 
