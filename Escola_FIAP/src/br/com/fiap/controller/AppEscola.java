@@ -1,4 +1,4 @@
-package br.com.fiap.aplicacao;
+package br.com.fiap.controller;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -13,6 +13,9 @@ import br.com.fiap.entity.Aluno;
 import br.com.fiap.entity.Curso;
 import br.com.fiap.entity.CursoAluno;
 import br.com.fiap.entity.Escola;
+import br.com.fiap.service.AlunoService;
+import br.com.fiap.service.CursoService;
+import br.com.fiap.service.EscolaService;
 
 public class AppEscola {
 	
@@ -34,9 +37,13 @@ public class AppEscola {
 	private static void menu() { // menu principal
 		String opcaoViaTeclado =null;
 		int opcao = 0;
+		EscolaService escolaService = new EscolaService();
+		CursoService  cursoService  = new CursoService();
+		AlunoService  alunoService  = new AlunoService();
+		
 		do {
 			System.out
-					.println("\n\n### SISCOM - Sistema Comercial de Controle de Compras e Vendas ###");
+					.println("\n\n### SISCAE - Sistema Cadastramento e Controle de aluno e escola ###");
 			System.out.println("\n                ====================================");
 			System.out.println("                  |     1 - Incluir Escola           |");
 			System.out.println("                  |     2 - Incluir Aluno            |");
@@ -69,27 +76,31 @@ public class AppEscola {
 			opcao = Integer.valueOf(opcaoViaTeclado);
 			switch (opcao) {
 			case 1:
-				incluirEscola();
+				escolaService.incluirEscola();
 				break;
 			case 2:
-				incluirAluno();
+				alunoService.incluirAluno();
 				break;
 			case 3:
-				incluirCurso();
+				cursoService.incluirCurso();
 				break;
 			case 4:
-				vincularAlunoCurso();
+				alunoService.vincularAlunoCurso();
 				break;
 			case 5:
-				incluirNotasDosAlunosPorCurso();
+				alunoService.incluirNotasDosAlunosPorCurso();
+				break;
 			case 6:
-				listarEscolas();
+				escolaService.listarEscolas();
+				break;
 			case 7:
-				listarAlunos();
+				alunoService.listarAlunos();
+				break;
 			case 8:
-				listarCursos();
+				cursoService.listarCursos();
+				break;
 			case 9:
-				listarSituacaoDoAluno();
+				alunoService.listarSituacaoDoAluno();
 				break;
 			case 0:
 			     System.out.println("Programa encerrado.");
@@ -108,7 +119,7 @@ public class AppEscola {
 	 * 
 	 * 
 	 * @noReturn
-	 */
+	 *//*
 	private static void incluirEscola() {
 		EntityManagerFactory emf = Persistence.createEntityManagerFactory("jpaPU");
 		EntityManager em = emf.createEntityManager();
@@ -125,13 +136,13 @@ public class AppEscola {
 		}
 	}
 
-	/**
+	*//**
 	 * Metodo para incluir um aluno
 	 * 
 	 * 
 	 * 
 	 * @noReturn
-	 */
+	 *//*
 	private static void incluirAluno() {
 		EntityManagerFactory emf = Persistence.createEntityManagerFactory("jpaPU");
 		EntityManager em = emf.createEntityManager();
@@ -155,13 +166,13 @@ public class AppEscola {
 
 	}
 
-	/**
+	*//**
 	 * Metodo para incluir um curso
 	 * 
 	 * 
 	 * 
 	 * @noReturn
-	 */
+	 *//*
 	private static void incluirCurso() {
 		EntityManagerFactory emf = Persistence.createEntityManagerFactory("jpaPU");
 		EntityManager em = emf.createEntityManager();
@@ -181,13 +192,13 @@ public class AppEscola {
 		}
 	}
 
-	/**
+	*//**
 	 * Vincular aluno ao curso
 	 * 
 	 * 
 	 * 
 	 * @noReturn
-	 */
+	 *//*
 	private static void vincularAlunoCurso() {
 		boolean alunoExistente = true;
 		boolean cursoExistente = true;
@@ -247,13 +258,13 @@ public class AppEscola {
 		}
 	}
 
-	/**
+	*//**
 	 * Vincular nota do aluno ao curso
 	 * 
 	 * 
 	 * 
 	 * @noReturn
-	 */
+	 *//*
 
 	private static void incluirNotasDosAlunosPorCurso() {
 		boolean alunoExistente = true;
@@ -306,12 +317,12 @@ public class AppEscola {
 
 			CursoAlunoDao cursoAlunoDao = new CursoAlunoDao(em3);
 
-			/*try {
+			try {
 				cursoAluno = cursoAlunoDao.consultarCursoAlunoPorId(2L, 1L);
 			} catch (Exception e) {
 				JOptionPane.showMessageDialog(null, "ERRO: " + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
 				e.printStackTrace();
-			}*/
+			}
             
 			try {
 				for (CursoAluno cursoAlunos : cursoAlunoDao.consultarCursoAlunoPorId(aluno, curso)) {
@@ -341,13 +352,13 @@ public class AppEscola {
 		}
 	}
 
-	/**
+	*//**
 	 * Listar escolas
 	 * 
 	 * 
 	 * 
 	 * @noReturn
-	 */
+	 *//*
 	private static void listarEscolas() {
 		EntityManagerFactory emf = Persistence.createEntityManagerFactory("jpaPU");
 		EntityManager em = emf.createEntityManager();
@@ -355,6 +366,8 @@ public class AppEscola {
 
 		try {
 			for (Escola escola : escolaDao.listarEscolas()) {
+				System.out.println("-------------------------------------");
+				System.out.println("Escola");
 				System.out.println("-------------------------------------");
 				System.out.println("Id: " + escola.getId());
 				System.out.println("Descrição: " + escola.getEndereço());
@@ -366,13 +379,13 @@ public class AppEscola {
 		}
 	}
 
-	/**
+	*//**
 	 * Listar alunos
 	 * 
 	 * 
 	 * 
 	 * @noReturn
-	 */
+	 *//*
 	private static void listarAlunos() {
 		EntityManagerFactory emf = Persistence.createEntityManagerFactory("jpaPU");
 		EntityManager em = emf.createEntityManager();
@@ -390,13 +403,13 @@ public class AppEscola {
 		}
 	}
 
-	/**
+	*//**
 	 * Listar cursos
 	 * 
 	 * 
 	 * 
 	 * @noReturn
-	 */
+	 *//*
 	private static void listarCursos() {
 		EntityManagerFactory emf = Persistence.createEntityManagerFactory("jpaPU");
 		EntityManager em = emf.createEntityManager();
@@ -415,13 +428,13 @@ public class AppEscola {
 		}
 	}
 
-	/**
+	*//**
 	 * Listar situação do aluno
 	 * 
 	 * 
 	 * 
 	 * @noReturn
-	 */
+	 *//*
 	private static void listarSituacaoDoAluno() {
 		boolean alunoExistente = true;
 		EntityManagerFactory emf1 = Persistence.createEntityManagerFactory("jpaPU");
@@ -468,4 +481,4 @@ public class AppEscola {
 			e.printStackTrace();
 		}
 	}
-}
+*/}
