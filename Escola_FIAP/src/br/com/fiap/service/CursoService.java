@@ -24,7 +24,7 @@ public class CursoService {
 		CursoDao cursoDao = new CursoDao(em);
 
 		Curso curso = new Curso();
-		curso.setNome("Aula de Java");
+		curso.setNome(JOptionPane.showInputDialog("Nome do curso -> "));
 		Escola escola = new Escola();
 		escola.setId(1L);
 		curso.setEscola(escola);

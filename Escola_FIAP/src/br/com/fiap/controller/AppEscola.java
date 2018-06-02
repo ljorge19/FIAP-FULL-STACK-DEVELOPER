@@ -59,12 +59,6 @@ public class AppEscola {
 			opcaoViaTeclado = JOptionPane.showInputDialog("OpÁ„o -> ");
 			System.out.print("\n");
 			
-			/* if (opcaoViaTeclado.matches("^[a-zA-Z¡¬√¿«… Õ”‘’⁄‹·‚„‡ÁÈÍÌÛÙı˙¸]*$")) {
-		         System.out.println("SÛ tem letras.");
-		         opcaoViaTeclado = "10";
-			 }else if (opcaoViaTeclado.matches("^[0-9]*$")) {
-		         System.out.println("SÛ tem dÌgitos.");
-			 }*/
 			 
 			if (!opcaoViaTeclado.matches("^[0-9]*$"))
 			     opcaoViaTeclado = "100";
@@ -119,7 +113,7 @@ public class AppEscola {
 	 * 
 	 * 
 	 * @noReturn
-	 *//*
+	 */
 	private static void incluirEscola() {
 		EntityManagerFactory emf = Persistence.createEntityManagerFactory("jpaPU");
 		EntityManager em = emf.createEntityManager();
@@ -136,13 +130,13 @@ public class AppEscola {
 		}
 	}
 
-	*//**
+	/**
 	 * Metodo para incluir um aluno
 	 * 
 	 * 
 	 * 
 	 * @noReturn
-	 *//*
+	 */
 	private static void incluirAluno() {
 		EntityManagerFactory emf = Persistence.createEntityManagerFactory("jpaPU");
 		EntityManager em = emf.createEntityManager();
@@ -166,13 +160,13 @@ public class AppEscola {
 
 	}
 
-	*//**
+	/**
 	 * Metodo para incluir um curso
 	 * 
 	 * 
 	 * 
 	 * @noReturn
-	 *//*
+	 */
 	private static void incluirCurso() {
 		EntityManagerFactory emf = Persistence.createEntityManagerFactory("jpaPU");
 		EntityManager em = emf.createEntityManager();
@@ -192,13 +186,13 @@ public class AppEscola {
 		}
 	}
 
-	*//**
+	/**
 	 * Vincular aluno ao curso
 	 * 
 	 * 
 	 * 
 	 * @noReturn
-	 *//*
+	 */
 	private static void vincularAlunoCurso() {
 		boolean alunoExistente = true;
 		boolean cursoExistente = true;
@@ -258,13 +252,13 @@ public class AppEscola {
 		}
 	}
 
-	*//**
+	/**
 	 * Vincular nota do aluno ao curso
 	 * 
 	 * 
 	 * 
 	 * @noReturn
-	 *//*
+	 */
 
 	private static void incluirNotasDosAlunosPorCurso() {
 		boolean alunoExistente = true;
@@ -317,12 +311,12 @@ public class AppEscola {
 
 			CursoAlunoDao cursoAlunoDao = new CursoAlunoDao(em3);
 
-			try {
+			/*try {
 				cursoAluno = cursoAlunoDao.consultarCursoAlunoPorId(2L, 1L);
 			} catch (Exception e) {
 				JOptionPane.showMessageDialog(null, "ERRO: " + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
 				e.printStackTrace();
-			}
+			}*/
             
 			try {
 				for (CursoAluno cursoAlunos : cursoAlunoDao.consultarCursoAlunoPorId(aluno, curso)) {
@@ -352,13 +346,13 @@ public class AppEscola {
 		}
 	}
 
-	*//**
+	/**
 	 * Listar escolas
 	 * 
 	 * 
 	 * 
 	 * @noReturn
-	 *//*
+	 */
 	private static void listarEscolas() {
 		EntityManagerFactory emf = Persistence.createEntityManagerFactory("jpaPU");
 		EntityManager em = emf.createEntityManager();
@@ -379,13 +373,13 @@ public class AppEscola {
 		}
 	}
 
-	*//**
+	/**
 	 * Listar alunos
 	 * 
 	 * 
 	 * 
 	 * @noReturn
-	 *//*
+	 */
 	private static void listarAlunos() {
 		EntityManagerFactory emf = Persistence.createEntityManagerFactory("jpaPU");
 		EntityManager em = emf.createEntityManager();
@@ -403,13 +397,13 @@ public class AppEscola {
 		}
 	}
 
-	*//**
+	/**
 	 * Listar cursos
 	 * 
 	 * 
 	 * 
 	 * @noReturn
-	 *//*
+	 */
 	private static void listarCursos() {
 		EntityManagerFactory emf = Persistence.createEntityManagerFactory("jpaPU");
 		EntityManager em = emf.createEntityManager();
@@ -428,13 +422,13 @@ public class AppEscola {
 		}
 	}
 
-	*//**
+	/**
 	 * Listar situaÁ„o do aluno
 	 * 
 	 * 
 	 * 
 	 * @noReturn
-	 *//*
+	 */
 	private static void listarSituacaoDoAluno() {
 		boolean alunoExistente = true;
 		EntityManagerFactory emf1 = Persistence.createEntityManagerFactory("jpaPU");
@@ -481,4 +475,4 @@ public class AppEscola {
 			e.printStackTrace();
 		}
 	}
-*/}
+}

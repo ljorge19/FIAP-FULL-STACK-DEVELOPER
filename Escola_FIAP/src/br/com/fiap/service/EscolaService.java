@@ -12,7 +12,7 @@ public class EscolaService {
 	
 	
 	/**
-	 * Metodo para incluir á escola
+	 * Metodo para incluir a escola
 	 * 
 	 * 
 	 * 
@@ -22,10 +22,12 @@ public class EscolaService {
 		EntityManagerFactory emf = Persistence.createEntityManagerFactory("jpaPU");
 		EntityManager em = emf.createEntityManager();
 		EscolaDao escolaDao = new EscolaDao(em);
-
+		
+		
 		Escola escola = new Escola();
-		escola.setNome("Escola do FIAP");
-		escola.setEndereço("av lins de vasconcelos 1222");
+		escola.setId(1L);
+		escola.setNome(JOptionPane.showInputDialog("Nome da escola -> "));
+		escola.setEndereço(JOptionPane.showInputDialog("Endereço da escola -> "));
 		try {
 			escolaDao.salvar(escola);
 		} catch (Exception e) {
@@ -53,7 +55,8 @@ public class EscolaService {
 				System.out.println("-------------------------------------");
 				System.out.println("Escola");
 				System.out.println("-------------------------------------");
-				System.out.println("Id: " + escola.getId());
+				System.out.println("Código da escola: " + escola.getId());
+				System.out.println("Nome da escola: " + escola.getNome());
 				System.out.println("Descrição: " + escola.getEndereço());
 				System.out.println("-------------------------------------");
 			}

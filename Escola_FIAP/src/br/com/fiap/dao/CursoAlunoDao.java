@@ -84,6 +84,8 @@ public class CursoAlunoDao {
 	
 	public List<CursoAluno> consultarCursoAlunoPorId(Aluno aluno, Curso curso) {
 		TypedQuery<CursoAluno> query = em.createQuery("Select e from CursoAluno e where e.aluno = :aluno and e.curso = :curso", CursoAluno.class);
+		query.setParameter("aluno", aluno);
+		query.setParameter("curso", curso);
 		return query.getResultList();
 	}
 	  

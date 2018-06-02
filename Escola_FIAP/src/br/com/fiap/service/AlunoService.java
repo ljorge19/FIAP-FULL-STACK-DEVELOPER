@@ -12,6 +12,7 @@ import br.com.fiap.entity.Aluno;
 import br.com.fiap.entity.Curso;
 import br.com.fiap.entity.CursoAluno;
 import br.com.fiap.entity.Escola;
+import br.com.fiap.verificadores.VerificadorDadosViaTeclado;
 
 public class AlunoService {
 
@@ -25,15 +26,24 @@ public class AlunoService {
 	public void incluirAluno() {
 		EntityManagerFactory emf = Persistence.createEntityManagerFactory("jpaPU");
 		EntityManager em = emf.createEntityManager();
+		AlunoDao alunoDao = new AlunoDao(em);
 
-		// setando a escola que será vinculada ao curso
+		// setando a escola vinculada ao curso
 		Escola escola = new Escola();
 		escola.setId(1L);
 
-		AlunoDao alunoDao = new AlunoDao(em);
+		// setando os dados do aluno
 		Aluno aluno = new Aluno();
-		aluno.setNome("Leandro Jorge");
-		aluno.setCpf(36272435878L);
+		aluno.setNome(JOptionPane.showInputDialog("Nome do aluno -> "));
+		VerificadorDadosViaTeclado verificador = new VerificadorDadosViaTeclado();
+		String opcaoViaTeclado = null;
+		Long cpfAluno = 0L;
+		opcaoViaTeclado = JOptionPane.showInputDialog("Inserir o cpf do aluno -> ");
+
+		// verificando dados via teclado
+		verificador.verificaInteiros(opcaoViaTeclado);
+		cpfAluno = Long.valueOf(opcaoViaTeclado);
+		aluno.setCpf(cpfAluno);
 		aluno.setEscola(escola);
 
 		try {
@@ -62,9 +72,29 @@ public class AlunoService {
 		//
 		EntityManager em1 = emf.createEntityManager();
 		CursoDao cursoDao = new CursoDao(em1);
+		VerificadorDadosViaTeclado verificador = new VerificadorDadosViaTeclado();
 		Curso curso = null;
+
+		// dados recebidos via teclado
+		String opcaoViaTeclado1 = null;
+		Long codigoCurso = 0L;
+		opcaoViaTeclado1 = JOptionPane.showInputDialog("Inserir o código do curso -> ");
+
+		// verificando se existe caracteres nos dados do código do curso
+		/*
+		 * if (!opcaoViaTeclado1.matches("^[0-9]*$")) opcaoViaTeclado1 = "100";
+		 * System.out.println("Opção Inválida!");{ JOptionPane.showMessageDialog(null,
+		 * "Opção Inválida!"); System.exit(0); }
+		 * 
+		 * if (opcaoViaTeclado1.equals("")) { opcaoViaTeclado1 = "100";
+		 * System.out.println("Opção Inválida!"); JOptionPane.showMessageDialog(null,
+		 * "Opção Inválida!"); System.exit(0); }
+		 */
+
+		verificador.verificaInteiros(opcaoViaTeclado1);
+		codigoCurso = Long.valueOf(opcaoViaTeclado1);
 		try {
-			curso = cursoDao.consultarCursoPorId(1L);
+			curso = cursoDao.consultarCursoPorId(codigoCurso);
 			if (curso == null) {
 				alunoExistente = false;
 			}
@@ -79,8 +109,16 @@ public class AlunoService {
 		EntityManager em2 = emf.createEntityManager();
 		AlunoDao alunoDao = new AlunoDao(em2);
 		Aluno aluno = null;
+
+		// dados recebidos via teclado
+		String opcaoViaTeclado2 = null;
+		Long codigoAluno = 0L;
+		opcaoViaTeclado2 = JOptionPane.showInputDialog("Inserir o código do aluno -> ");
+
+		verificador.verificaInteiros(opcaoViaTeclado2);
+		codigoAluno = Long.valueOf(opcaoViaTeclado2);
 		try {
-			aluno = alunoDao.consultarAlunoPorId(2L);
+			aluno = alunoDao.consultarAlunoPorId(codigoAluno);
 			if (aluno == null) {
 				alunoExistente = false;
 			}
@@ -135,8 +173,18 @@ public class AlunoService {
 		//
 		CursoDao cursoDao = new CursoDao(em1);
 		Curso curso = null;
+		VerificadorDadosViaTeclado verificador = new VerificadorDadosViaTeclado();
+
+		// dados recebidos via teclado
+		String opcaoViaTeclado1 = null;
+		Long codigoCurso = 0L;
+		opcaoViaTeclado1 = JOptionPane.showInputDialog("Inserir o código do curso -> ");
+
+		verificador.verificaInteiros(opcaoViaTeclado1);
+		codigoCurso = Long.valueOf(opcaoViaTeclado1);
+
 		try {
-			curso = cursoDao.consultarCursoPorId(1L);
+			curso = cursoDao.consultarCursoPorId(codigoCurso);
 			if (curso == null) {
 				alunoExistente = false;
 			}
@@ -150,8 +198,16 @@ public class AlunoService {
 		//
 		AlunoDao alunoDao = new AlunoDao(em2);
 		Aluno aluno = null;
+
+		// dados recebidos via teclado
+		String opcaoViaTeclado2 = null;
+		Long codigoAluno = 0L;
+		opcaoViaTeclado2 = JOptionPane.showInputDialog("Inserir o código do aluno -> ");
+
+		verificador.verificaInteiros(opcaoViaTeclado2);
+		codigoAluno = Long.valueOf(opcaoViaTeclado2);
 		try {
-			aluno = alunoDao.consultarAlunoPorId(2L);
+			aluno = alunoDao.consultarAlunoPorId(codigoAluno);
 			if (aluno == null) {
 				alunoExistente = false;
 			}
@@ -217,7 +273,8 @@ public class AlunoService {
 		try {
 			for (Aluno aluno : alunoDao.listarAlunos()) {
 				System.out.println("-------------------------------------");
-				System.out.println("Código do aluno: " + aluno.getId() + "Nome do aluno: " + aluno.getNome());
+				System.out.println("CÓDIGO DO ALUNO: " + aluno.getId()); 
+				System.out.println("NOME DO ALUNO: " + aluno.getNome());
 				System.out.println("-------------------------------------");
 			}
 		} catch (Exception e) {
@@ -226,7 +283,6 @@ public class AlunoService {
 		}
 	}
 
-	
 	/**
 	 * Listar situação do aluno
 	 * 
@@ -239,16 +295,23 @@ public class AlunoService {
 		EntityManagerFactory emf1 = Persistence.createEntityManagerFactory("jpaPU");
 		EntityManager em1 = emf1.createEntityManager();
 
-		
-		
 		EntityManager em2 = emf1.createEntityManager();
 		//
 		// verificar se o aluno existe
 		//
 		AlunoDao alunoDao = new AlunoDao(em2);
 		Aluno aluno = null;
+
+		// dados recebidos via teclado
+		VerificadorDadosViaTeclado verificador = new VerificadorDadosViaTeclado();
+		String opcaoViaTeclado2 = null;
+		Long codigoAluno = 0L;
+		opcaoViaTeclado2 = JOptionPane.showInputDialog("Inserir o código do aluno -> ");
+
+		verificador.verificaInteiros(opcaoViaTeclado2);
+		codigoAluno = Long.valueOf(opcaoViaTeclado2);
 		try {
-			aluno = alunoDao.consultarAlunoPorId(2L);
+			aluno = alunoDao.consultarAlunoPorId(codigoAluno);
 			if (aluno == null) {
 				alunoExistente = false;
 			}
@@ -256,13 +319,11 @@ public class AlunoService {
 			JOptionPane.showMessageDialog(null, "ERRO: " + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
 			e.printStackTrace();
 		}
-		
-		
-		
+
 		CursoAlunoDao cursoAlunoDao = new CursoAlunoDao(em1);
 
 		try {
-			for (CursoAluno cursoAlunos : cursoAlunoDao.listarCursoAluno()) {
+			for (CursoAluno cursoAlunos : cursoAlunoDao.consultarSituacaoAluno(aluno)) {
 				if (cursoAlunos == null) {
 					alunoExistente = false;
 					System.out.println("-------------------------------------");
