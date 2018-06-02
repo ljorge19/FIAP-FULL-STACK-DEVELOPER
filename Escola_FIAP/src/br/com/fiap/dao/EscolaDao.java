@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
+import javax.swing.JOptionPane;
 
 import br.com.fiap.entity.Escola;
 
@@ -20,14 +21,17 @@ public class EscolaDao {
 	    try {
 	      // Inicia uma transação com o banco de dados.
 	      em.getTransaction().begin();
-	      System.out.println("Salvando a pessoa.");
-	      // Verifica se a pessoa ainda não está salva no banco de dados.
+	      // Verifica se a elemento ainda não está salva no banco de dados.
 	      if(escola.getId() == null) {
-	        //Salva os dados da pessoa.
+	        //Salva os dados da elemento.
 	        em.persist(escola);
+	        System.out.println("Solicitação executada com sucesso");
+	        JOptionPane.showMessageDialog(null, "Solicitação executada com sucesso");
 	      } else {
-	        //Atualiza os dados da pessoa.
+	        //Atualiza os dados da elemento.
 	        escola = em.merge(escola);
+	        System.out.println("alterado com sucesso");
+	        JOptionPane.showMessageDialog(null, "alterado com sucesso");
 	      }
 	      // Finaliza a transação.
 	      em.getTransaction().commit();
@@ -41,10 +45,10 @@ public class EscolaDao {
 	    try {
 	      // Inicia uma transação com o banco de dados.
 	      em.getTransaction().begin();
-	      // Consulta a pessoa na base de dados através do seu ID.
+	      // Consulta a elemento na base de dados através do seu ID.
 	      Escola escola = em.find(Escola.class, id);
 	      System.out.println("Excluindo o escola: " + escola.getNome());
-	      // Remove a pessoa da base de dados.
+	      // Remove a elemento da base de dados.
 	      em.remove(escola);
 	      // Finaliza a transação.
 	      em.getTransaction().commit();
@@ -54,14 +58,14 @@ public class EscolaDao {
 	  }
 	
 	 /**
-	   * Consulta o pessoa pelo ID.
+	   * Consulta o elemento pelo ID.
 	   * @param id
 	   * @return o objeto Pessoa.
 	   */
 	  public Escola consultarEscolaPorId(Long id) {
 	    Escola escola = null;
 	    try {
-	      //Consulta uma pessoa pelo seu ID.
+	      //Consulta uma elemento pelo seu ID.
 	      escola = em.find(Escola.class, id);
 	    } finally {
 	      em.close();

@@ -44,19 +44,21 @@ public class AppEscola {
 		do {
 			System.out
 					.println("\n\n### SISCAE - Sistema Cadastramento e Controle de aluno e escola ###");
-			System.out.println("\n                ====================================");
-			System.out.println("                  |     1 - Incluir Escola           |");
-			System.out.println("                  |     2 - Incluir Aluno            |");
-			System.out.println("                  |     3 - Incluir Curso            |");
-			System.out.println("                  |     4 - vincular Aluno Curso     |");
-			System.out.println("                  |     5 - incluir Notas Dos Alunos |");
-			System.out.println("                  |     6 - listarEscolas            |");
-			System.out.println("                  |     7 - listarAlunos             |");
-			System.out.println("                  |     8 - listar Cursos            |");
-			System.out.println("                  |     9 - listarS ituacao Do Aluno |");
-			System.out.println("                  |     0 - Sair                     |");
-			System.out.println("                  ==================================\n");
-			opcaoViaTeclado = JOptionPane.showInputDialog("Opção -> ");
+			System.out.println("\n");
+			System.out.println("             ===========================================");
+			System.out.println("             |     1 - Incluir/alterar dados da escola |");
+			System.out.println("             |     2 - Incluir aluno                   |");
+			System.out.println("             |     3 - Incluir curso                   |");
+			System.out.println("             |     4 - vincular aluno curso            |");
+			System.out.println("             |     5 - incluir notas Dos alunos        |");
+			System.out.println("             |     6 - Mostrar dados da escola         |");
+			System.out.println("             |     7 - listar alunos                   |");
+			System.out.println("             |     8 - listar cursos                   |");
+			System.out.println("             |     9 - listar situacao Do Aluno        |");
+			System.out.println("             |     0 - Sair                            |");
+			System.out.println("             ===========================================");
+			System.out.println("\n");
+			opcaoViaTeclado = JOptionPane.showInputDialog("Opções do menu -> ");
 			System.out.print("\n");
 			
 			 

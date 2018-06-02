@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
+import javax.swing.JOptionPane;
 
 import br.com.fiap.entity.Aluno;
 import br.com.fiap.entity.Curso;
@@ -22,14 +23,17 @@ public class CursoAlunoDao {
 	    try {
 	      // Inicia uma transação com o banco de dados.
 	      em.getTransaction().begin();
-	      System.out.println("Salvando a pessoa.");
-	      // Verifica se a pessoa ainda não está salva no banco de dados.
+	      // Verifica se a elemento ainda não está salva no banco de dados.
 	      if(cursoAluno.getId() == null) {
-	        //Salva os dados da pessoa.
+	        //Salva os dados da elemento.
 	        em.persist(cursoAluno);
+	        System.out.println("Solicitação executada com sucesso");
+	        JOptionPane.showMessageDialog(null, "Solicitação executada com sucesso");
 	      } else {
-	        //Atualiza os dados da pessoa.
+	        //Atualiza os dados da elemento.
 	    	  cursoAluno = em.merge(cursoAluno);
+	    	  System.out.println("Solicitação executada com sucesso");
+	    	  JOptionPane.showMessageDialog(null, "Solicitação executada com sucesso");
 	      }
 	      // Finaliza a transação.
 	      em.getTransaction().commit();
@@ -43,10 +47,10 @@ public class CursoAlunoDao {
 	    try {
 	      // Inicia uma transação com o banco de dados.
 	      em.getTransaction().begin();
-	      // Consulta a pessoa na base de dados através do seu ID.
+	      // Consulta a elemento na base de dados através do seu ID.
 	      CursoAluno disciplina = em.find(CursoAluno.class, id);
 	      System.out.println("Excluindo o disciplina: " + disciplina.getNomeCurso());
-	      // Remove a pessoa da base de dados.
+	      // Remove a elemento da base de dados.
 	      em.remove(disciplina);
 	      // Finaliza a transação.
 	      em.getTransaction().commit();
@@ -56,14 +60,14 @@ public class CursoAlunoDao {
 	  }
 	
 	 /**
-	   * Consulta o pessoa pelo ID.
+	   * Consulta o elemento pelo ID.
 	   * @param id
 	   * @return o objeto Pessoa.
 	   */
 	 /* public CursoAluno consultarCursoAlunoPorId(Long aluno, Long curso) {
 	    CursoAluno cursoAlunoRetorno = null;
 	    try {
-	      //Consulta uma pessoa pelo seu ID.
+	      //Consulta uma elemento pelo seu ID.
 	    	TypedQuery<CursoAluno> query = em.createQuery("Select ca from CursoAluno ca where ca.aluno = :aluno and ca.curso = :curso ", CursoAluno.class);
 	    } finally {
 	      em.close();
@@ -74,7 +78,7 @@ public class CursoAlunoDao {
 	 /* public CursoAluno consultarAlunoPorId(Long aluno) {
 		    CursoAluno alunoRetorno = null;
 		    try {
-		      //Consulta uma pessoa pelo seu ID.
+		      //Consulta uma elemento pelo seu ID.
 		    	TypedQuery<CursoAluno> query = em.createQuery("Select e from CursoAluno e where e.aluno = :aluno ", CursoAluno.class);
 		    } finally {
 		      em.close();

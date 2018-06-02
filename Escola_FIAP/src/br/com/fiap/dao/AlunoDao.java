@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
+import javax.swing.JOptionPane;
 
 import br.com.fiap.entity.Aluno;
 import br.com.fiap.entity.Escola;
@@ -20,14 +21,18 @@ public class AlunoDao {
 	    try {
 	      // Inicia uma transação com o banco de dados.
 	      em.getTransaction().begin();
-	      System.out.println("Salvando a pessoa.");
+	     
 	      // Verifica se a pessoa ainda não está salva no banco de dados.
 	      if(aluno.getId() == null) {
 	        //Salva os dados da pessoa.
 	        em.persist(aluno);
+	        System.out.println("incluido com sucesso");
+	        JOptionPane.showMessageDialog(null, "incluido com sucesso");
 	      } else {
 	        //Atualiza os dados da pessoa.
 	        aluno = em.merge(aluno);
+	        System.out.println("alterado com sucesso");
+	        JOptionPane.showMessageDialog(null, "alterado com sucesso");
 	      }
 	      // Finaliza a transação.
 	      em.getTransaction().commit();

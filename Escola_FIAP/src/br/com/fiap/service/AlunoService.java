@@ -65,6 +65,7 @@ public class AlunoService {
 	public void vincularAlunoCurso() {
 		boolean alunoExistente = true;
 		boolean cursoExistente = true;
+		boolean alunoJaVinculado = false;
 		EntityManagerFactory emf = Persistence.createEntityManagerFactory("jpaPU");
 
 		//
@@ -81,22 +82,17 @@ public class AlunoService {
 		opcaoViaTeclado1 = JOptionPane.showInputDialog("Inserir o código do curso -> ");
 
 		// verificando se existe caracteres nos dados do código do curso
-		/*
-		 * if (!opcaoViaTeclado1.matches("^[0-9]*$")) opcaoViaTeclado1 = "100";
-		 * System.out.println("Opção Inválida!");{ JOptionPane.showMessageDialog(null,
-		 * "Opção Inválida!"); System.exit(0); }
-		 * 
-		 * if (opcaoViaTeclado1.equals("")) { opcaoViaTeclado1 = "100";
-		 * System.out.println("Opção Inválida!"); JOptionPane.showMessageDialog(null,
-		 * "Opção Inválida!"); System.exit(0); }
-		 */
-
 		verificador.verificaInteiros(opcaoViaTeclado1);
 		codigoCurso = Long.valueOf(opcaoViaTeclado1);
 		try {
 			curso = cursoDao.consultarCursoPorId(codigoCurso);
 			if (curso == null) {
 				alunoExistente = false;
+				System.out.println("----------------------------------------");
+				System.out.println("Aluno não existente, código incorreto ! ");
+				System.out.println("----------------------------------------");
+				JOptionPane.showMessageDialog(null, "Aluno não existente, código incorreto ! ");
+				return;
 			}
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(null, "ERRO: " + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
@@ -121,6 +117,11 @@ public class AlunoService {
 			aluno = alunoDao.consultarAlunoPorId(codigoAluno);
 			if (aluno == null) {
 				alunoExistente = false;
+				System.out.println("----------------------------------------");
+				System.out.println("Aluno não existente, código incorreto ! ");
+				System.out.println("----------------------------------------");
+				JOptionPane.showMessageDialog(null, "Aluno não existente, código incorreto ! ");
+				return;
 			}
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(null, "ERRO: " + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
@@ -137,7 +138,29 @@ public class AlunoService {
 		cursoAluno.setNomeCurso(curso.getNome());
 		cursoAluno.setCurso(curso);
 
-		if (alunoExistente == true && cursoExistente == true) {
+		// verificar se o aluno não já cadastrado no curso/
+		EntityManager em4 = emf.createEntityManager();
+		CursoAlunoDao cursoAlunoDao2 = new CursoAlunoDao(em4);
+
+		try {
+			for (CursoAluno cursoAlunos : cursoAlunoDao2.consultarSituacaoAluno(aluno)) {
+				if (cursoAlunos == null) {
+
+					System.out.println("---------------------------------------");
+					System.out.println("Aluno já está vinculado á esse curso ! ");
+					System.out.println("---------------------------------------");
+					JOptionPane.showMessageDialog(null, "Aluno já está vinculado á esse curso !");
+
+					alunoJaVinculado = true;
+				}
+				
+			}
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(null, "ERRO: " + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+			e.printStackTrace();
+		}
+
+		if (alunoExistente == true && cursoExistente == true && alunoJaVinculado == false) {
 
 			CursoAlunoDao cursoAlunoDao = new CursoAlunoDao(em3);
 			try {
@@ -187,6 +210,12 @@ public class AlunoService {
 			curso = cursoDao.consultarCursoPorId(codigoCurso);
 			if (curso == null) {
 				alunoExistente = false;
+				System.out.println("----------------------------------------");
+				System.out.println("Aluno não existente, código incorreto ! ");
+				System.out.println("----------------------------------------");
+				JOptionPane.showMessageDialog(null, "Aluno não existente, código incorreto ! ");
+
+				return;
 			}
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(null, "ERRO: " + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
@@ -210,6 +239,12 @@ public class AlunoService {
 			aluno = alunoDao.consultarAlunoPorId(codigoAluno);
 			if (aluno == null) {
 				alunoExistente = false;
+				System.out.println("----------------------------------------");
+				System.out.println("Aluno não existente, código incorreto ! ");
+				System.out.println("----------------------------------------");
+				JOptionPane.showMessageDialog(null, "Aluno não existente, código incorreto ! ");
+
+				return;
 			}
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(null, "ERRO: " + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
@@ -221,16 +256,11 @@ public class AlunoService {
 		//
 		// inserindo a nota do aluno
 		//
+		boolean cursoAlunosExiste = false;
 		CursoAluno cursoAluno = null;
 		if (alunoExistente == true && cursoExistente == true) {
 
 			CursoAlunoDao cursoAlunoDao = new CursoAlunoDao(em3);
-
-			/*
-			 * try { cursoAluno = cursoAlunoDao.consultarCursoAlunoPorId(2L, 1L); } catch
-			 * (Exception e) { JOptionPane.showMessageDialog(null, "ERRO: " +
-			 * e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE); e.printStackTrace(); }
-			 */
 
 			try {
 				for (CursoAluno cursoAlunos : cursoAlunoDao.consultarCursoAlunoPorId(aluno, curso)) {
@@ -240,19 +270,38 @@ public class AlunoService {
 					cursoAluno.setCurso(curso);
 					cursoAluno.setNomeAluno(aluno.getNome());
 					cursoAluno.setNomeCurso(curso.getNome());
+					cursoAlunosExiste = true;
 				}
 			} catch (Exception e) {
 				JOptionPane.showMessageDialog(null, "ERRO: " + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
 				e.printStackTrace();
 			}
 
-			// colocar a nota vinda pelo joptionpane
-			cursoAluno.setNota(10);
-			try {
-				cursoAlunoDao.salvar(cursoAluno);
-			} catch (Exception e) {
-				JOptionPane.showMessageDialog(null, "ERRO: " + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
-				e.printStackTrace();
+			if (cursoExistente == true) {
+				// colocar a nota vinda pelo joptionpane
+				String opcaoViaTeclado3 = null;
+				int notaAluno = 0;
+				opcaoViaTeclado3 = JOptionPane.showInputDialog("Inserir a nota do aluno -> ");
+
+				verificador.verificaInteiros(opcaoViaTeclado3);
+				notaAluno = Integer.valueOf(opcaoViaTeclado3);
+				
+				
+				cursoAluno.setNota(notaAluno);
+				try {
+					cursoAlunoDao.salvar(cursoAluno);
+				} catch (Exception e) {
+					JOptionPane.showMessageDialog(null, "ERRO: " + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+					e.printStackTrace();
+				}
+			} else {
+				System.out.println("-------------------------------------------------");
+				System.out.println("Aluno não vinculado ao curso, código incorreto ! ");
+				System.out.println("-------------------------------------------------");
+				JOptionPane.showMessageDialog(null, "este Aluno não está vinculado ao curso, código incorreto ! ");
+
+				return;
+
 			}
 
 		}
@@ -273,7 +322,7 @@ public class AlunoService {
 		try {
 			for (Aluno aluno : alunoDao.listarAlunos()) {
 				System.out.println("-------------------------------------");
-				System.out.println("CÓDIGO DO ALUNO: " + aluno.getId()); 
+				System.out.println("CÓDIGO DO ALUNO: " + aluno.getId());
 				System.out.println("NOME DO ALUNO: " + aluno.getNome());
 				System.out.println("-------------------------------------");
 			}
@@ -314,6 +363,12 @@ public class AlunoService {
 			aluno = alunoDao.consultarAlunoPorId(codigoAluno);
 			if (aluno == null) {
 				alunoExistente = false;
+				System.out.println("----------------------------------------");
+				System.out.println("Aluno não existente, código incorreto ! ");
+				System.out.println("----------------------------------------");
+				JOptionPane.showMessageDialog(null, "Aluno não existente, código incorreto ! ");
+
+				return;
 			}
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(null, "ERRO: " + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
@@ -326,9 +381,12 @@ public class AlunoService {
 			for (CursoAluno cursoAlunos : cursoAlunoDao.consultarSituacaoAluno(aluno)) {
 				if (cursoAlunos == null) {
 					alunoExistente = false;
-					System.out.println("-------------------------------------");
+					System.out.println("----------------------------------------");
 					System.out.println("Aluno não existente, código incorreto ! ");
-					System.out.println("-------------------------------------");
+					System.out.println("----------------------------------------");
+					JOptionPane.showMessageDialog(null, "Aluno não existente, código incorreto ! ");
+
+					return;
 				}
 				System.out.println("-------------------------------------");
 				System.out.println("Nome do curso: " + cursoAlunos.getNomeCurso());
