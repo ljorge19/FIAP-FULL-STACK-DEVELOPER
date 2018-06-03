@@ -16,7 +16,7 @@ public class Exercicio3  {
 			int func = i +1;
 			
 			String salarioStr = JOptionPane.
-					showInputDialog("Informe o salário do funcionário " + func);
+					showInputDialog("Informe o salário do funcionário " + func + " use o . no lugar da ,");
 			
 			double salario = Double.valueOf(salarioStr);
 			totalSalario += salario;

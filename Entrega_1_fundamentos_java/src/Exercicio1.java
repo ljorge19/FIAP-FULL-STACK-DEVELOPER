@@ -7,13 +7,15 @@ public class Exercicio1 {
 
 		int[] vetor = new int[10];
 
+		System.out.println("Digite no console uma sequencia de 10 numero, pressione enter após cada número");
+		System.out.println("lembre-se não use numeros repetidos \n");
+		
 		for (int i = 0; i < vetor.length; i++) {
-			System.out.println("Digite um número");
-			System.out.println("lembre-se não use numeros repetidos \n");
 			
 			vetor[i] = entrada.nextInt();
 		}
 
+		System.out.println("Resultado: \n");
 		for (int i = vetor.length - 1; i >= 0; i--) {
 			System.out.println(vetor[i]);
 		}
