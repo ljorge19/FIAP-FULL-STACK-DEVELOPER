@@ -72,7 +72,7 @@ public class AppEscola {
 			opcao = Integer.valueOf(opcaoViaTeclado);
 			switch (opcao) {
 			case 1:
-				escolaService.incluirEscola();
+				escolaService.incluirEscolaJDBC();
 				break;
 			case 2:
 				alunoService.incluirAluno();
