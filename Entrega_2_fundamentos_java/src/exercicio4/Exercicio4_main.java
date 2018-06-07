@@ -64,7 +64,7 @@ public class Exercicio4_main {
 		if (subtracaoVerificador == true)
 			texto += "subtracao :" + subtracao + "  ";
 		if (multiplicacaoVerificador == true)
-			texto += "multiplicacao :" + subtracao + "  ";
+			texto += "multiplicacao :" + multiplicacao + "  ";
 		if (divisaoVerificador == true)
 			texto += "divisao :" + divisao + "  ";
 

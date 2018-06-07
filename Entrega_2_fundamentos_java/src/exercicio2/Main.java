@@ -21,33 +21,39 @@ public class Main {
 	    movel=(Movel) tablet;
 	    tablet=(EquipamentoEletronico) equipamento;
 	    
-	  /*  a. objeto para equipamento (objeto=equipamento;);
-	    resposta = Implicito.
+	    /*
+	     * 
+	     * RESPOSTAS
+	     * 
+	     */
+	    
+	  /*  A. objeto para equipamento (objeto=equipamento;);
+	    Resposta = Implicito.
 
-	    b. objeto para móvel (objeto=movel;);
-	    resposta = Implicito.
+	    B. objeto para móvel (objeto=movel;);
+	    Resposta = Implicito.
 
 
-	    c. equipamento para tablet2 (equipamento=tablet2;);
-	    resposta = Implicito
+	    C. equipamento para tablet2 (equipamento=tablet2;);
+	    Resposta = Implicito
 
-	    d. equipamento para smartphone2 (equipamento=smartphone2;);
-	    resposta = Implicito
+	    D. equipamento para smartphone2 (equipamento=smartphone2;);
+	    Resposta = Implicito
 
-	    e. smartphone para tablet (smartphone=tablet;);
-	    resposta = Implicito
+	    E. smartphone para tablet (smartphone=tablet;);
+	    Resposta = Implicito
 
-	    f. smartphone2 para tablet2 (smartphone2=tablet2;);
-	    resposta = Impossivel
+	    F. smartphone2 para tablet2 (smartphone2=tablet2;);
+	    Resposta = Impossivel
 
-	    g. equipamento para tablete (equipamento=(Equipamento) tablet;);
-	    resposta = Explicito
+	    G. equipamento para tablete (equipamento=(Equipamento) tablet;);
+	    Resposta = Explicito
 
-	    h. movel para tablete (movel=(Movel) tablet;);
-	    resposta = Explicito
+	    H. movel para tablete (movel=(Movel) tablet;);
+	    Resposta = Explicito
 
-	    i. tablet para equipamento (tablet=(EquipamentoEletronico) equipamento;); 
-	    resposta = Explicito*/
+	    I. tablet para equipamento (tablet=(EquipamentoEletronico) equipamento;); 
+	    Resposta = Explicito*/
 	    
 	}
 }
