@@ -112,7 +112,7 @@ public class EscolaService {
 				System.out.println("-------------------------------------");
 				System.out.println("Código da escola: " + escola.getId());
 				System.out.println("Nome da escola: " + escola.getNome());
-				System.out.println("Descrição: " + escola.getEndereço());
+				System.out.println("Endereço: " + escola.getEndereço());
 				System.out.println("-------------------------------------");
 			}
 		} catch (Exception e) {

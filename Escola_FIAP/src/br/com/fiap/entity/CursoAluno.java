@@ -26,12 +26,6 @@ public class CursoAluno {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "ID")
 	private Long id;
-
-	@Column(name = "NOME_CURSO", length = 45)
-	private String nomeCurso;
-
-	@Column(name = "NOME_ALUNO", length = 45)
-	private String nomeAluno;
 	
 	@Column(name = "NOTA")
 	private int nota;
@@ -50,22 +44,6 @@ public class CursoAluno {
 
 	public void setId(Long id) {
 		this.id = id;
-	}
-
-	public String getNomeCurso() {
-		return nomeCurso;
-	}
-
-	public void setNomeCurso(String nomeCurso) {
-		this.nomeCurso = nomeCurso;
-	}
-
-	public String getNomeAluno() {
-		return nomeAluno;
-	}
-
-	public void setNomeAluno(String nomeAluno) {
-		this.nomeAluno = nomeAluno;
 	}
 
 	public int getNota() {

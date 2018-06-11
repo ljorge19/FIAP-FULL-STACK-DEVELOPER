@@ -27,7 +27,7 @@ public class Curso {
 	@Column(name = "ID")
 	private Long id;
 
-	@Column(name = "NOME", length = 45)
+	@Column(name = "NOME", length = 80)
 	private String nome;
 	
 	@ManyToOne(fetch = FetchType.LAZY)

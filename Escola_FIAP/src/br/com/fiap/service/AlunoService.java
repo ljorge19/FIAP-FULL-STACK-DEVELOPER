@@ -38,7 +38,7 @@ public class AlunoService {
 		VerificadorDadosViaTeclado verificador = new VerificadorDadosViaTeclado();
 		String opcaoViaTeclado = null;
 		Long cpfAluno = 0L;
-		opcaoViaTeclado = JOptionPane.showInputDialog("Inserir o cpf do aluno -> ");
+		opcaoViaTeclado = JOptionPane.showInputDialog("Inserir o cpf do aluno sem ponto ou traço -> ");
 
 		// verificando dados via teclado
 		verificador.verificaInteiros(opcaoViaTeclado);
@@ -133,9 +133,9 @@ public class AlunoService {
 		//
 		EntityManager em3 = emf.createEntityManager();
 		CursoAluno cursoAluno = new CursoAluno();
-		cursoAluno.setNomeAluno(aluno.getNome());
+		//cursoAluno.setNomeAluno(aluno.getNome());
 		cursoAluno.setAluno(aluno);
-		cursoAluno.setNomeCurso(curso.getNome());
+		//cursoAluno.setNomeCurso(curso.getNome());
 		cursoAluno.setCurso(curso);
 
 		// verificar se o aluno não já cadastrado no curso/
@@ -211,7 +211,7 @@ public class AlunoService {
 			if (curso == null) {
 				alunoExistente = false;
 				System.out.println("----------------------------------------");
-				System.out.println("Aluno não existente, código incorreto ! ");
+				System.out.println("curso não existente, código incorreto ! ");
 				System.out.println("----------------------------------------");
 				JOptionPane.showMessageDialog(null, "Aluno não existente, código incorreto ! ");
 
@@ -219,6 +219,7 @@ public class AlunoService {
 			}
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(null, "ERRO: " + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(null, "Aluno ou curso inexistente, favor verificar ");
 			e.printStackTrace();
 		}
 
@@ -248,6 +249,7 @@ public class AlunoService {
 			}
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(null, "ERRO: " + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(null, "Aluno ou curso inexistente, favor verificar ");
 			e.printStackTrace();
 		}
 
@@ -268,12 +270,13 @@ public class AlunoService {
 					cursoAluno.setId(cursoAlunos.getId());
 					cursoAluno.setAluno(aluno);
 					cursoAluno.setCurso(curso);
-					cursoAluno.setNomeAluno(aluno.getNome());
-					cursoAluno.setNomeCurso(curso.getNome());
+					//cursoAluno.setNomeAluno(aluno.getNome());
+					//cursoAluno.setNomeCurso(curso.getNome());
 					cursoAlunosExiste = true;
 				}
 			} catch (Exception e) {
 				JOptionPane.showMessageDialog(null, "ERRO: " + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(null, "Aluno ou curso inexistente, favor verificar ");
 				e.printStackTrace();
 			}
 
@@ -281,17 +284,18 @@ public class AlunoService {
 				// colocar a nota vinda pelo joptionpane
 				String opcaoViaTeclado3 = null;
 				int notaAluno = 0;
-				opcaoViaTeclado3 = JOptionPane.showInputDialog("Inserir a nota do aluno -> ");
+				opcaoViaTeclado3 = JOptionPane.showInputDialog("Inserir a nota do aluno, somente numeros inteiros -> ");
 
 				verificador.verificaInteiros(opcaoViaTeclado3);
 				notaAluno = Integer.valueOf(opcaoViaTeclado3);
 				
-				
 				cursoAluno.setNota(notaAluno);
+				
 				try {
 					cursoAlunoDao.salvar(cursoAluno);
 				} catch (Exception e) {
 					JOptionPane.showMessageDialog(null, "ERRO: " + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(null, "Aluno ou curso inexistente, favor verificar ");
 					e.printStackTrace();
 				}
 			} else {
@@ -341,10 +345,13 @@ public class AlunoService {
 	 */
 	public void listarSituacaoDoAluno() {
 		boolean alunoExistente = true;
+		boolean verificaCurso = true;
+		String nomeCurso = null;
 		EntityManagerFactory emf1 = Persistence.createEntityManagerFactory("jpaPU");
 		EntityManager em1 = emf1.createEntityManager();
 
 		EntityManager em2 = emf1.createEntityManager();
+		EntityManager em3 = emf1.createEntityManager();
 		//
 		// verificar se o aluno existe
 		//
@@ -388,9 +395,39 @@ public class AlunoService {
 
 					return;
 				}
+				
+				//
+				// verificar se o curso existe
+				//
+				if (verificaCurso == true) {
+					verificaCurso = false;
+				CursoDao cursoDao = new CursoDao(em3);
+				Curso curso = null;
+				
+                
+				try {
+					curso = cursoDao.consultarCursoPorId(cursoAlunos.getCurso().getId());
+					if (curso == null) {
+						alunoExistente = false;
+						System.out.println("----------------------------------------");
+						System.out.println("Curso não existente, código incorreto ! ");
+						System.out.println("----------------------------------------");
+						JOptionPane.showMessageDialog(null, "Curso não existente, código incorreto ! ");
+
+						return;
+					}
+				} catch (Exception e) {
+					JOptionPane.showMessageDialog(null, "ERRO: " + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+					e.printStackTrace();
+				}
+				 nomeCurso = curso.getNome();
+				
+				}
+				
+				
 				System.out.println("-------------------------------------");
-				System.out.println("Nome do curso: " + cursoAlunos.getNomeCurso());
-				System.out.println("Nome do aluno: " + cursoAlunos.getNomeAluno());
+				System.out.println("Nome do curso: " + nomeCurso);
+				System.out.println("Nome do aluno: " + aluno.getNome());
 				System.out.println("Nota do aluno: " + cursoAlunos.getNota());
 				System.out.println("-------------------------------------");
 			}

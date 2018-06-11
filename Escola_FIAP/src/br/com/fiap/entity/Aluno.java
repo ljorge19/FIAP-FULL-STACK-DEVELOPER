@@ -27,7 +27,7 @@ public class Aluno {
 	@Column(name = "ID")
 	private Long id;
 
-	@Column(name = "NOME", length = 45)
+	@Column(name = "NOME", length = 80)
 	private String nome;
 
 	@Column(name = "CPF")

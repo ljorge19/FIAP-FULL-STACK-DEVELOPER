@@ -48,10 +48,10 @@ public class CursoAlunoDao {
 	      // Inicia uma transação com o banco de dados.
 	      em.getTransaction().begin();
 	      // Consulta a elemento na base de dados através do seu ID.
-	      CursoAluno disciplina = em.find(CursoAluno.class, id);
-	      System.out.println("Excluindo o disciplina: " + disciplina.getNomeCurso());
+	      CursoAluno cursoAluno = em.find(CursoAluno.class, id);
+	      System.out.println("Excluindo o relacionamento entre curso id= "  + cursoAluno.getCurso().getNome() + "Aluno id= " + cursoAluno.getAluno().getNome());
 	      // Remove a elemento da base de dados.
-	      em.remove(disciplina);
+	      em.remove(cursoAluno);
 	      // Finaliza a transação.
 	      em.getTransaction().commit();
 	    } finally {
@@ -64,27 +64,6 @@ public class CursoAlunoDao {
 	   * @param id
 	   * @return o objeto Pessoa.
 	   */
-	 /* public CursoAluno consultarCursoAlunoPorId(Long aluno, Long curso) {
-	    CursoAluno cursoAlunoRetorno = null;
-	    try {
-	      //Consulta uma elemento pelo seu ID.
-	    	TypedQuery<CursoAluno> query = em.createQuery("Select ca from CursoAluno ca where ca.aluno = :aluno and ca.curso = :curso ", CursoAluno.class);
-	    } finally {
-	      em.close();
-	    }
-	    return cursoAlunoRetorno;
-	  }*/
-	  
-	 /* public CursoAluno consultarAlunoPorId(Long aluno) {
-		    CursoAluno alunoRetorno = null;
-		    try {
-		      //Consulta uma elemento pelo seu ID.
-		    	TypedQuery<CursoAluno> query = em.createQuery("Select e from CursoAluno e where e.aluno = :aluno ", CursoAluno.class);
-		    } finally {
-		      em.close();
-		    }
-		    return alunoRetorno;
-		  }*/
 	
 	public List<CursoAluno> consultarCursoAlunoPorId(Aluno aluno, Curso curso) {
 		TypedQuery<CursoAluno> query = em.createQuery("Select e from CursoAluno e where e.aluno = :aluno and e.curso = :curso", CursoAluno.class);
