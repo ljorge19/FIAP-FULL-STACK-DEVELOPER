@@ -11,8 +11,8 @@ import br.com.fiap.helper.EventoHelper;
 public class AppEventos {
 	public static void main(String[] args) {
 		 // incluirEvento();
-		    listarEventos();
-		//listarParticipantes(1);
+		  //listarEventos();
+		listarParticipantes(3);
 	}
 
 	private static void incluirEvento() {
