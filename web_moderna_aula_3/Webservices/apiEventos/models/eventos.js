@@ -6,7 +6,7 @@ module.exports = function (app) {
     var evento = Schema({
         descricao: { type: String, required: true },
         data: { type: Date },
-        responsavel: { type: String }
+        preco: { type: Number }
     });
     return mongoose.model('eventos', evento);
 };

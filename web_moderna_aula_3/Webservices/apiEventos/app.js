@@ -56,7 +56,7 @@ app.get('/eventos/:id', function (request, response) {
 app.post('/eventos', function (request, response) {
   var descricao = request.body.descricao;
   var data = request.body.data.split('/');
-  var responsavel = request.body.responsavel;
+  var preco = request.body.preco;
 
   //formato dd/MM/yyyy
   var objDate = new Date(data[2], data[1] - 1, data[0]);
@@ -64,7 +64,7 @@ app.post('/eventos', function (request, response) {
   var evento = {
     'descricao': descricao,
     'data': objDate,
-    'resposnsavel': responsavel
+    'preco': preco
   };
 
   Evento.create(evento, function (erro, evento) {
@@ -92,7 +92,7 @@ app.put('/eventos', function (request, response) {
 
       evento_upd.descricao = request.body.descricao;
       evento_upd.data = objDate;
-      evento_upd.responsavel = request.body.responsavel;
+      evento_upd.preco = request.body.preco;
 
       evento_upd.save(function (erro, evento) {
         if (erro) {
