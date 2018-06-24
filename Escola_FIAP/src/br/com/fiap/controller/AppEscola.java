@@ -44,8 +44,8 @@ public class AppEscola {
 			System.out.println("\n");
 			System.out.println("             ============================================");
 			System.out.println("             |     1 - Incluir/alterar dados da escola  |");
-			System.out.println("             |     2 - Incluir/alterar aluno            |");
-			System.out.println("             |     3 - Incluir/alterar curso            |");
+			System.out.println("             |     2 - Incluir aluno                    |");
+			System.out.println("             |     3 - Incluir curso                    |");
 			System.out.println("             |     4 - vincular aluno curso             |");
 			System.out.println("             |     5 - Incluir/alterar notas Dos alunos |");
 			System.out.println("             |     6 - Mostrar dados da escola          |");
